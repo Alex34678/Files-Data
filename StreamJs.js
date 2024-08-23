@@ -191,6 +191,7 @@ if (text.length > 300) {
 }
 
 // video player 
+
 document.addEventListener('DOMContentLoaded', () => {
     const player = fluidPlayer('player', {
         layoutControls: {
@@ -206,7 +207,7 @@ document.addEventListener('DOMContentLoaded', () => {
             },
             allowTheatre: true,
             playbackRateEnabled: true,
-            allowDownload: true,
+            allowDownload: false, // Disable download
             allowFullscreen: true,
             allowCaptions: true,
             captionsEnabled: true,
@@ -218,12 +219,12 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-// disabling right click
+// Disabling right click
 document.addEventListener("contextmenu", function (e) {
     e.preventDefault();
 });
 
-// disabling certain key actions
+// Disabling certain key actions
 document.addEventListener('keydown', function (e) {
     if (
         e.key === 'F12' ||
@@ -236,6 +237,7 @@ document.addEventListener('keydown', function (e) {
         e.preventDefault();
     }
 });
+
 
 
 const videolink = window.location.href;
