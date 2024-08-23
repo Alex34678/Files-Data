@@ -191,40 +191,30 @@ if (text.length > 300) {
 }
 
 // video player 
-
+const controls = [
+    'play-large',
+    'rewind', 'play',
+    'fast-forward',
+    'progress',
+    'current-time',
+    'duration',
+    // 'mute',
+    // 'volume',
+    'captions',
+    'settings',
+    'pip',
+    'airplay',
+    'download',
+    'fullscreen'
+];
 document.addEventListener('DOMContentLoaded', () => {
-    const player = fluidPlayer('player', {
-        layoutControls: {
-            controlBar: {
-                autoHideTimeout: 3,
-                animated: true,
-                playPauseAnimation: true,
-                scrubberAnimation: true,
-                controlBarVisibility: "auto"
-            },
-            timelinePreview: {
-                file: ''
-            },
-            allowTheatre: true,
-            playbackRateEnabled: true,
-            allowDownload: false, // Disable download
-            allowFullscreen: true,
-            allowCaptions: true,
-            captionsEnabled: true,
-            doubleClickFullscreen: true,
-            allowForwardSkip: true,
-            allowRewind: true,
-            playButtonShowing: true
-        }
-    });
+    const player = Plyr.setup('.player', { controls });
 });
 
-// Disabling right click
+// disabling right click
 document.addEventListener("contextmenu", function (e) {
     e.preventDefault();
 });
-
-// Disabling certain key actions
 document.addEventListener('keydown', function (e) {
     if (
         e.key === 'F12' ||
@@ -237,7 +227,6 @@ document.addEventListener('keydown', function (e) {
         e.preventDefault();
     }
 });
-
 
 
 const videolink = window.location.href;
