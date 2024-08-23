@@ -191,43 +191,25 @@ if (text.length > 300) {
 }
 
 // video player 
-var myPlayer = fluidPlayer('player', {
-        layoutControls: {
-            controlBar: {
-                autoHideTimeout: 3,
-                playPauseAnimation: true,
-                scrubberAnimation: true
-            },
-            htmlOnPauseBlock: {
-                html: null,
-                height: null,
-                width: null
-            },
-            primaryColor: "#00FF00",
-            posterImage: "",
-            playButtonShowing: true,
-            playButtonIcon: "",
-            persistentSettings: {
-                volume: true,
-                fullscreen: true,
-                speed: true
-            },
-            autoPlay: false,
-            mute: false,
-            allowTheatre: true,
-            allowDownload: false,  // Disable the download button
-            allowFullscreen: true,
-            allowTimecode: true,
-            allowResume: true,
-            allowKeyboardControl: true,
-            allowQuickScrubbing: true,
-            logo: {
-                imageUrl: "",
-                position: "top right",
-                clickUrl: ""
-            }
-        }
-    });
+const controls = [
+    'play-large',
+    'rewind', 'play',
+    'fast-forward',
+    'progress',
+    'current-time',
+    'duration',
+    // 'mute',
+    // 'volume',
+    'captions',
+    'settings',
+    'pip',
+    'airplay',
+    // 'download',
+    'fullscreen'
+];
+document.addEventListener('DOMContentLoaded', () => {
+    const player = Plyr.setup('.player', { controls });
+});
 
 // disabling right click
 document.addEventListener("contextmenu", function (e) {
@@ -245,6 +227,7 @@ document.addEventListener('keydown', function (e) {
         e.preventDefault();
     }
 });
+
 
 const videolink = window.location.href;
 const bisallink = videolink.replace("/watch/", "/");
