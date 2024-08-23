@@ -204,7 +204,7 @@ const controls = [
     'settings',
     'pip',
     'airplay',
-    // 'download',
+    'download',
     'fullscreen'
 ];
 document.addEventListener('DOMContentLoaded', () => {
