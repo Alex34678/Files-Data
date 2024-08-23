@@ -193,7 +193,7 @@ if (text.length > 300) {
 // video player 
 const controls = [
     'play-large',
-    // 'rewind', 'play',
+    'rewind', 'play',
     // 'fast-forward',
     'progress',
     'current-time',
