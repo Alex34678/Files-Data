@@ -204,50 +204,17 @@ const controls = [
     'settings',
     'pip',
     'airplay',
-    'fullscreen',
     // 'download',
-    'screencast' // Adding a custom control for screencasting
+    'fullscreen'
 ];
-
 document.addEventListener('DOMContentLoaded', () => {
     const player = Plyr.setup('.player', { controls });
-
-    // Adding event listener for the custom screencast control
-    player.forEach(p => {
-        p.on('ready', event => {
-            const screencastButton = document.createElement('button');
-            screencastButton.className = 'plyr__controls__item plyr__control plyr__screencast';
-            screencastButton.innerHTML = '<svg>...screencast icon SVG here...</svg>';
-            screencastButton.title = 'Start Screencast';
-            screencastButton.onclick = startScreencast;
-            event.detail.plyr.elements.controls.appendChild(screencastButton);
-        });
-    });
 });
 
-// Screencast function using getDisplayMedia
-function startScreencast() {
-    navigator.mediaDevices.getDisplayMedia({ video: true })
-        .then(stream => {
-            // Add stream to the player or handle it as needed
-            const video = document.querySelector('.player video');
-            video.srcObject = stream;
-
-            // Optionally handle stream end
-            stream.getVideoTracks()[0].addEventListener('ended', () => {
-                console.log('Screencast ended');
-            });
-        })
-        .catch(err => {
-            console.error('Error starting screencast:', err);
-        });
-}
-
-// Disabling right click
+// disabling right click
 document.addEventListener("contextmenu", function (e) {
     e.preventDefault();
 });
-
 document.addEventListener('keydown', function (e) {
     if (
         e.key === 'F12' ||
