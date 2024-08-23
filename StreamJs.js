@@ -193,19 +193,19 @@ if (text.length > 300) {
 // video player 
 const controls = [
     'play-large',
-    'rewind', 'play',
-    'fast-forward',
+    // 'rewind', 'play',
+    // 'fast-forward',
     'progress',
     'current-time',
     'duration',
-    'mute',
-    'volume',
-    'captions',
-    'settings',
-    'pip',
-    'airplay',
-    // 'download',
-    'fullscreen'
+    // 'mute',
+    // 'volume',
+    // 'captions',
+    // 'settings',
+    // 'pip',
+    // 'airplay',
+    'fullscreen',
+    // 'download'
 ];
 document.addEventListener('DOMContentLoaded', () => {
     const player = Plyr.setup('.player', { controls });
