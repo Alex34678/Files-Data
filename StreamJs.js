@@ -191,30 +191,75 @@ if (text.length > 300) {
 }
 
 // video player 
-const controls = [
-    'play-large',
-    'rewind', 'play',
-    'fast-forward',
-    'progress',
-    'current-time',
-    'duration',
-    // 'mute',
-    // 'volume',
-    'captions',
-    'settings',
-    'pip',
-    'airplay',
-    // 'download',
-    'fullscreen'
-];
 document.addEventListener('DOMContentLoaded', () => {
-    const player = Plyr.setup('.player', { controls });
+    // Initialize Fluid Player
+    const player = fluidPlayer('player', {
+        layoutControls: {
+            playLarge: true,
+            rewind: true,
+            play: true,
+            fastForward: true,
+            progress: true,
+            currentTime: true,
+            duration: true,
+            captions: true,
+            settings: true,
+            pip: true,
+            airplay: true,
+            fullscreen: true,
+            customControls: [
+                {
+                    // Create Chromecast button in the video player
+                    tag: 'button',
+                    html: '<i class="icon-cast">Cast</i>',
+                    className: 'chromecast-button',
+                    position: 'top-left',
+                    id: 'chromecastButton',
+                    onClick: () => castToChromecast(),
+                },
+            ]
+        },
+    });
+
+    // Initialize Chromecast API
+    function initCast() {
+        const context = cast.framework.CastContext.getInstance();
+        context.setOptions({
+            receiverApplicationId: chrome.cast.media.DEFAULT_MEDIA_RECEIVER_APP_ID,
+            autoJoinPolicy: chrome.cast.AutoJoinPolicy.ORIGIN_SCOPED
+        });
+    }
+
+    // Function to handle casting the video to Chromecast
+    function castToChromecast() {
+        const session = cast.framework.CastContext.getInstance().getCurrentSession();
+        if (!session) {
+            console.log('No Chromecast session available.');
+            return;
+        }
+
+        const mediaInfo = new chrome.cast.media.MediaInfo(player.src, 'video/mp4');
+        const request = new chrome.cast.media.LoadRequest(mediaInfo);
+
+        session.loadMedia(request).then(
+            () => { console.log('Video loaded on Chromecast!'); },
+            (errorCode) => { console.error('Error casting video: ' + errorCode); }
+        );
+    }
+
+    // Chromecast SDK readiness
+    window['__onGCastApiAvailable'] = function(isAvailable) {
+        if (isAvailable) {
+            initCast();
+        }
+    };
 });
 
-// disabling right click
+// Disable right-click
 document.addEventListener("contextmenu", function (e) {
     e.preventDefault();
 });
+
 document.addEventListener('keydown', function (e) {
     if (
         e.key === 'F12' ||
@@ -228,9 +273,10 @@ document.addEventListener('keydown', function (e) {
     }
 });
 
-
+// Video link manipulation
 const videolink = window.location.href;
 const bisallink = videolink.replace("/watch/", "/");
+
 
 function vlc_player() {
     const openbisallink = bisallink;
